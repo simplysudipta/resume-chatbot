@@ -1,8 +1,7 @@
 import os
 import streamlit as st
 from dotenv import load_dotenv
-import google.generativeai as genai
-from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
+from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain_community.document_loaders import PyPDFLoader
 from langchain.chains import RetrievalQA
 from langchain_community.vectorstores import FAISS
@@ -11,7 +10,7 @@ from langchain.prompts import PromptTemplate
 
 # --- Load API keys ---
 load_dotenv()
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
 
 # --- Streamlit Page ---
 st.set_page_config(page_title="Sudipta Pal Resume Bot", page_icon="🤖")
@@ -28,7 +27,7 @@ text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=100
 chunks = text_splitter.split_documents(docs)
 
 # --- Create embeddings + retriever ---
-embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+embeddings = OpenAIEmbeddings()
 vector_store = FAISS.from_documents(chunks, embeddings)
 retriever = vector_store.as_retriever()
 
@@ -46,8 +45,8 @@ custom_prompt = PromptTemplate(
     input_variables=["context", "question"]
 )
 
-# --- Gemini LLM ---
-llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", temperature=0)
+# --- LLM (OpenAI GPT) ---
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
 
 qa_chain = RetrievalQA.from_chain_type(
     llm=llm, 
