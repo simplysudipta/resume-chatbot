@@ -68,7 +68,7 @@ if user_input:
 
     # Save chat
     st.session_state["messages"].append(("user", user_input))
-    st.session_state["messages"].append(("assistant", answer))  # <- changed from "bot"
+    st.session_state["messages"].append(("assistant", answer))
 
 
 # --- Display Messages ---
