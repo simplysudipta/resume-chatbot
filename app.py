@@ -60,7 +60,7 @@ if "messages" not in st.session_state:
     st.session_state["messages"] = []
 
 # --- User Input ---
-user_input = st.chat_input("Ask something about Sudipta Pal's resume...")
+user_input = st.chat_input("Ask something about Sudipta's resume...")
 
 if user_input:
     response = qa_chain.invoke({"query": user_input})
