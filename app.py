@@ -15,7 +15,7 @@ os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
 # --- Streamlit Page ---
 st.set_page_config(page_title="Sudipta Pal Resume Bot", page_icon="🤖")
 st.title("🤖 Resume Q&A - Sudipta Pal")
-st.write("Ask questions about Sudipta Pal's resume!")
+st.write("Ask questions about Sudipta's resume!")
 
 # --- Load Resume PDF ---
 file_path = "SudiptaPal.pdf"
@@ -60,7 +60,7 @@ if "messages" not in st.session_state:
     st.session_state["messages"] = []
 
 # --- User Input ---
-user_input = st.chat_input("Ask something about Sudipta's resume...")
+user_input = st.chat_input("Ask something...")
 
 if user_input:
     response = qa_chain.invoke({"query": user_input})
