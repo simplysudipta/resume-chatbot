@@ -1,15 +1,15 @@
-import os
 import streamlit as st
-from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain_community.document_loaders import PyPDFLoader
 from langchain.chains import RetrievalQA
 from langchain_community.vectorstores import FAISS
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.prompts import PromptTemplate
+import os
 
-# --- Load API keys ---
-load_dotenv()
+# --- Get API Key from Streamlit secrets ---
+OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
+os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
 
 # --- Streamlit Page ---
 st.set_page_config(page_title="Sudipta Pal Resume Bot", page_icon="🤖")
