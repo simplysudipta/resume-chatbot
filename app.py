@@ -73,6 +73,9 @@ if user_input:
 
 # --- Display Messages ---
 for role, msg in st.session_state["messages"]:
-    chat_role = "user" if role == "user" else "assistant"
+    if role.lower() == "user":
+        chat_role = "user"
+    else:
+        chat_role = "assistant"
     with st.chat_message(chat_role):
         st.markdown(msg)
