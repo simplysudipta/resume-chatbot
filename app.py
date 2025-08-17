@@ -174,8 +174,15 @@ Feel free to ask me anything about his resume - from technical skills to work ex
 
 # --- Display Chat History ---
 for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
+    # Handle both tuple format (old) and dict format (new)
+    if isinstance(message, tuple):
+        role, content = message
+    else:
+        role = message["role"]
+        content = message["content"]
+    
+    with st.chat_message(role):
+        st.markdown(content)
 
 # --- Handle Sample Question from Sidebar ---
 if hasattr(st.session_state, 'sample_question'):
