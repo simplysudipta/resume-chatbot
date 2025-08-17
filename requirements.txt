@@ -5,5 +5,3 @@ langchain-community
 langchain-openai
 faiss-cpu
 pypdf
-google-generativeai
-langchain-google-genai
