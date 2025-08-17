@@ -15,39 +15,6 @@ os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
 # --- Streamlit Page ---
 st.set_page_config(page_title="Sudipta Pal Resume Bot", page_icon="🤖")
 st.title("🤖 Resume Q&A - Sudipta Pal")
-st.markdown("""
-<style>
-div[data-testid="stChatMessageContent"] p {
-    font-size: 1rem;
-}
-
-/* Style for user messages - keep on left */
-div[data-testid="stChatMessage"][data-testid*="user"] {
-    flex-direction: row;
-    text-align: left;
-}
-
-/* Style for assistant messages - move to right */
-div[data-testid="stChatMessage"]:not([data-testid*="user"]) {
-    flex-direction: row-reverse;
-    text-align: right;
-}
-
-div[data-testid="stChatMessage"]:not([data-testid*="user"]) div[data-testid="stChatMessageContent"] {
-    background-color: #e3f2fd;
-    border-radius: 10px;
-    padding: 10px;
-    margin-left: 20%;
-}
-
-div[data-testid="stChatMessage"][data-testid*="user"] div[data-testid="stChatMessageContent"] {
-    background-color: #f5f5f5;
-    border-radius: 10px;
-    padding: 10px;
-    margin-right: 20%;
-}
-</style>
-""", unsafe_allow_html=True)
 st.write("Ask questions about Sudipta's resume!")
 
 # --- Load Resume PDF ---
