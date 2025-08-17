@@ -59,24 +59,27 @@ qa_chain = RetrievalQA.from_chain_type(
 if "messages" not in st.session_state:
     st.session_state["messages"] = []
 
+# --- Display Messages ---
+for role, msg in st.session_state["messages"]:
+    with st.chat_message(role):
+        st.markdown(msg)
+
 # --- User Input ---
 user_input = st.chat_input("Ask something...")
 
 if user_input:
+    # Show user message immediately
+    with st.chat_message("user"):
+        st.markdown(user_input)
+
+    # Run QA chain
     response = qa_chain.invoke({"query": user_input})
     answer = response["result"]
 
-    # Save chat
+    # Show assistant message
+    with st.chat_message("assistant"):
+        st.markdown(answer)
+
+    # Save chat history
     st.session_state["messages"].append(("user", user_input))
     st.session_state["messages"].append(("assistant", answer))
-
-
-# --- Display Messages ---
-with st.chat_message_container():
-    for role, msg in st.session_state["messages"]:
-        if role.lower() == "user":
-            with st.chat_message("user"):
-                st.markdown(msg)
-        else:
-            with st.chat_message("assistant"):
-                st.markdown(msg)
