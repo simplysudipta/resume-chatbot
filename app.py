@@ -1,15 +1,17 @@
+import os
 import streamlit as st
-from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+from dotenv import load_dotenv
+import google.generativeai as genai
+from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
 from langchain_community.document_loaders import PyPDFLoader
 from langchain.chains import RetrievalQA
 from langchain_community.vectorstores import FAISS
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.prompts import PromptTemplate
-import os
 
-# --- Get API Key from Streamlit secrets ---
-OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
-os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
+# --- Load API keys ---
+load_dotenv()
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 # --- Streamlit Page ---
 st.set_page_config(page_title="Sudipta Pal Resume Bot", page_icon="🤖")
@@ -26,14 +28,14 @@ text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=100
 chunks = text_splitter.split_documents(docs)
 
 # --- Create embeddings + retriever ---
-embeddings = OpenAIEmbeddings()
+embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
 vector_store = FAISS.from_documents(chunks, embeddings)
 retriever = vector_store.as_retriever()
 
 # --- Custom Prompt ---
 custom_prompt = PromptTemplate(
     template="""You are acting as Sudipta Pal. You are answering questions by analyzing his resume. 
-    Be professional and engaging, as if talking to a recruiter or future employer. 
+    Be professional and engaging, as if talking to a potential client or future employer. 
     If you don't know the answer based on the context, politely suggest contacting via email.
 
     Context: {context}
@@ -44,8 +46,8 @@ custom_prompt = PromptTemplate(
     input_variables=["context", "question"]
 )
 
-# --- LLM ---
-llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+# --- Gemini LLM ---
+llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", temperature=0)
 
 qa_chain = RetrievalQA.from_chain_type(
     llm=llm, 
