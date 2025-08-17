@@ -68,9 +68,11 @@ if user_input:
 
     # Save chat
     st.session_state["messages"].append(("user", user_input))
-    st.session_state["messages"].append(("bot", answer))
+    st.session_state["messages"].append(("assistant", answer))  # <- changed from "bot"
+
 
 # --- Display Messages ---
 for role, msg in st.session_state["messages"]:
-    with st.chat_message("user" if role == "user" else "assistant"):
+    chat_role = "user" if role == "user" else "assistant"
+    with st.chat_message(chat_role):
         st.markdown(msg)
