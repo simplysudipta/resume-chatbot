@@ -33,7 +33,7 @@ retriever = vector_store.as_retriever()
 
 # --- Custom Prompt ---
 custom_prompt = PromptTemplate(
-    template="""You are acting as Sudipta Pal. You are answering questions by analyzing his resume. 
+    template="""You are acting as Sudipta Pal. Answer questions **strictly based on the resume content**. 
     Be professional and engaging, as if talking to a potential client or future employer. 
     If you don't know the answer based on the context, politely suggest contacting via email.
 
