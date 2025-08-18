@@ -23,14 +23,14 @@ loader = PyPDFLoader(file_path)
 docs = loader.load_and_split()
 
 # --- Split text into chunks ---
-text_splitter = RecursiveCharacterTextSplitter(chunk_size=2500, chunk_overlap=250)
+text_splitter = RecursiveCharacterTextSplitter(chunk_size=1200, chunk_overlap=250)
 chunks = text_splitter.split_documents(docs)
 
 # --- Create embeddings + retriever ---
 embeddings = OpenAIEmbeddings()
 vector_store = FAISS.from_documents(chunks, embeddings)
 #retriever = vector_store.as_retriever()
-retriever = vector_store.as_retriever(search_kwargs={"k": 8})
+retriever = vector_store.as_retriever(search_kwargs={"k": 10})
 
 # --- Custom Prompt ---
 custom_prompt = PromptTemplate(
