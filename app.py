@@ -30,7 +30,7 @@ chunks = text_splitter.split_documents(docs)
 embeddings = OpenAIEmbeddings()
 vector_store = FAISS.from_documents(chunks, embeddings)
 #retriever = vector_store.as_retriever()
-retriever = vector_store.as_retriever(search_kwargs={"k": 3})
+retriever = vector_store.as_retriever(search_kwargs={"k": 5})
 
 # --- Custom Prompt ---
 custom_prompt = PromptTemplate(
