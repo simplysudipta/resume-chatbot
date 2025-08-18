@@ -23,7 +23,7 @@ loader = PyPDFLoader(file_path)
 docs = loader.load_and_split()
 
 # --- Split text into chunks ---
-text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
+text_splitter = RecursiveCharacterTextSplitter(chunk_size=1500, chunk_overlap=500)
 chunks = text_splitter.split_documents(docs)
 
 # --- Create embeddings + retriever ---
