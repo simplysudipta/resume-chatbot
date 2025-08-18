@@ -51,7 +51,7 @@ llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
 
 qa_chain = RetrievalQA.from_chain_type(
     llm=llm, 
-    chain_type="map_reduce", 
+    chain_type="stuff", 
     retriever=retriever,
     chain_type_kwargs={"prompt": custom_prompt}
 )
